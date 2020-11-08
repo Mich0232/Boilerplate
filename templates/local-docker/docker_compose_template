@@ -1,0 +1,34 @@
+version: '3.7'
+
+services:
+  client:
+    container_name: $PROJECT_NAME-fe
+    build:
+      context: ../client
+      dockerfile: ../local-docker/Dockerfile.FE
+    image: $PROJECT_NAME__LOWERCASE-fe-local:current
+    volumes:
+      - '../client:/client'
+      - '/client/node_modules'
+    ports:
+      - $FE_PORT:$FE_PORT
+    environment:
+      - NODE_ENV=development
+      - CHOKIDAR_USEPOLLING=true # helps Webpack file watcher over network
+    depends_on:
+      - server
+    command: npm start
+
+  server:
+    container_name: $PROJECT_NAME-be
+    build:
+      context: ../$BE_PROJECT_NAME
+      dockerfile: ../local-docker/Dockerfile.BE
+    image: $PROJECT_NAME__LOWERCASE-be-local:current
+    environment:
+      - PYTHONUNBUFFERED=1
+    volumes:
+      - '../$BE_PROJECT_NAME:/$BE_PROJECT_NAME'
+    ports:
+      - $BE_PORT:$BE_PORT
+    command: python manage.py runserver 0.0.0.0:$BE_PORT

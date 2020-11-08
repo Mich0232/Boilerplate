@@ -1,0 +1,7 @@
+Django$django_version
+djangorestframework
+djangorestframework-camel-case
+django-cors-headers
+django-extensions
+bpython
+factory-boy

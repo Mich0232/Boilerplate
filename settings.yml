@@ -1,0 +1,42 @@
+settings:
+  FE_PORT: 3001
+  BE_PORT: 8000
+
+files:
+  local_docker_files:
+    client_docker:
+      template: 'local-docker/client/react_template'
+      output_path: 'local-docker/Dockerfile.FE'
+      attributes:
+        node_version: '14.3.0'
+        PATH: '${PATH}' # just a workaround for actual ENV's
+
+    server_docker:
+      template: 'local-docker/server/django_template'
+      output_path: 'local-docker/Dockerfile.BE'
+      attributes:
+        python_version: '3.8.0'
+
+    docker_compose:
+      template: 'local-docker/docker_compose_template'
+      output_path: 'local-docker/docker-compose.yml'
+
+  client_files:
+    package_json:
+      template: 'client/package_json'
+      output_path: 'client/package.json'
+
+  server_files:
+    requirements:
+      template: 'server/requirements'
+      output_path: '$BE_PROJECT_NAME/requirements.txt'
+      attributes:
+        django_version: ''
+
+    settings:
+      template: 'server/settings'
+      output_path: '$BE_PROJECT_NAME/$BE_PROJECT_NAME/settings.py'
+
+    local_settings:
+      template: 'server/local_settings'
+      output_path: '$BE_PROJECT_NAME/$BE_PROJECT_NAME/local_settings.py'

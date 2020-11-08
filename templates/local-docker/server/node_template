@@ -1,0 +1,16 @@
+FROM node:$node_version
+
+# set working directory
+WORKDIR /$BE_PROJECT_NAME
+
+# add `/app/node_modules/.bin` to $PATH
+ENV PATH="/server/node_modules/.bin:${PATH}"
+
+# install and cache app dependencies
+COPY . /server
+RUN npm install
+
+EXPOSE $BE_PORT
+
+
+CMD $command

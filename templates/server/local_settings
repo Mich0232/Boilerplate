@@ -1,0 +1,24 @@
+from $BE_PROJECT_NAME.settings import INSTALLED_APPS, MIDDLEWARE
+from corsheaders.defaults import default_headers
+
+SECRET_KEY = 'mysupersecreeetkey'
+DEBUG = True
+ALLOWED_HOSTS = ['0.0.0.0', '127.0.0.1']
+
+INSTALLED_APPS += [
+    'corsheaders',
+]
+MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
+] + MIDDLEWARE
+
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIALS = True
+CORS_ORIGIN_WHITELIST = [
+    'http://127.0.0.1:3000',
+]
+
+
+CORS_ALLOW_HEADERS = list(default_headers) + [
+    'X-RENTAL-TOKEN',
+]

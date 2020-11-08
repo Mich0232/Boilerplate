@@ -1,0 +1,16 @@
+FROM python:$python_version
+
+#==================
+# Django
+#==================
+RUN mkdir /$BE_PROJECT_NAME
+WORKDIR $BE_PROJECT_NAME
+
+RUN pip install --upgrade pip
+COPY ./requirements.txt /$BE_PROJECT_NAME/requirements.txt
+RUN pip install -r requirements.txt
+
+EXPOSE $BE_PORT
+
+# COPY ./settings.py /$BE_PROJECT_NAME/local_settings.py
+
