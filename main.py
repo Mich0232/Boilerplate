@@ -1,4 +1,4 @@
-import sys, yaml
+import os, sys, yaml
 from string import Template
 from copy import deepcopy
 
@@ -10,6 +10,7 @@ class Renderer:
 
     def __init__(self):
         self.project_name, self.be_project_name = sys.argv[1], sys.argv[2]
+        self.dir_path = os.path.dirname(os.path.realpath(__file__))
 
     def __create_file(self, path, data):
         with open(path, 'w') as file:
@@ -29,7 +30,7 @@ class Renderer:
         for group, file_list in self.files.items():
             for _, entry in file_list.items():
                 template_file_name = entry["template"]
-                with open(f'templates/{template_file_name}', 'r+') as file:
+                with open(f'{self.dir_path}/templates/{template_file_name}', 'r+') as file:
                     template = Template(file.read())
 
                     # Extend defined attributes with base settings
@@ -43,7 +44,7 @@ class Renderer:
                     )
 
     def load_settings(self, filename='settings.yml'):
-        with open(filename, 'r') as file:
+        with open(f'{self.dir_path}/{filename}', 'r') as file:
             _settings = yaml.load(file.read(), Loader=yaml.Loader)
             self.settings = _settings.get("settings", {})
             self.settings.update({

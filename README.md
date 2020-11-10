@@ -11,7 +11,9 @@ Bolierplate is a project templating tool
 
 ### Usage
 
+
 ```sh
+> export PATH="<location>/Boilerplate/bin:$PATH"
 > python3 boilerplate <project_name>
 ```
 
